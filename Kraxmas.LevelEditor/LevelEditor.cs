@@ -1,53 +1,63 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Myra;
+using Myra.Graphics2D.UI;
 
 namespace Kraxmas.LevelEditor
 {
 	public class LevelEditor : Game
 	{
-		private GraphicsDeviceManager graphics;
+		private readonly GraphicsDeviceManager graphics;
 		private SpriteBatch spriteBatch;
+		private Desktop desktop;
+		private MainPanel mainPanel;
 
 		public LevelEditor()
 		{
-			graphics = new GraphicsDeviceManager(this);
+			graphics = new GraphicsDeviceManager(this)
+			{
+				PreferredBackBufferWidth = 1280,
+				PreferredBackBufferHeight = 720
+			};
+			Window.AllowUserResizing = true;
 			Content.RootDirectory = "Content";
 			IsMouseVisible = true;
+
+			MyraEnvironment.Game = this;
 		}
 
 		protected override void Initialize()
 		{
-			// TODO: Add your initialization logic here
+			// TODO: Remove after update to 3.8.1
+			graphics.PreferredBackBufferWidth = 1280;
+			graphics.PreferredBackBufferHeight = 720;
+			graphics.ApplyChanges();
 
 			base.Initialize();
 		}
 
 		protected override void LoadContent()
 		{
+			base.LoadContent();
+
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			// TODO: use this.Content to load your game content here
-		}
+			mainPanel = new MainPanel();
 
-		protected override void Update(GameTime gameTime)
-		{
-			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-			    Keyboard.GetState().IsKeyDown(Keys.Escape))
-				Exit();
-
-			// TODO: Add your update logic here
-
-			base.Update(gameTime);
+			desktop = new Desktop
+			{
+				HasExternalTextInput = true,
+				Root = mainPanel
+			};
 		}
 
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(Color.CornflowerBlue);
-
-			// TODO: Add your drawing code here
-
 			base.Draw(gameTime);
+
+			GraphicsDevice.Clear(Color.Black);
+
+			desktop.Render();
 		}
 	}
 }
