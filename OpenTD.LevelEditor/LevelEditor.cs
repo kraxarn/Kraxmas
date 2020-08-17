@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
 
-namespace Kraxmas.LevelEditor
+namespace OpenTD.LevelEditor
 {
 	public class LevelEditor : Game
 	{

@@ -2,10 +2,10 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
-using Kraxmas.Core;
 using Microsoft.Xna.Framework;
+using OpenTD.Core;
 
-namespace Kraxmas.Android
+namespace OpenTD.Android
 {
 	[Activity(
 		Label = "@string/app_name",

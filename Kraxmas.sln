@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kraxmas.Desktop", "Kraxmas.Desktop\Kraxmas.Desktop.csproj", "{DFD1B4A1-048F-40D2-895B-ADDDACC7653D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTD.Desktop", "OpenTD.Desktop\OpenTD.Desktop.csproj", "{DFD1B4A1-048F-40D2-895B-ADDDACC7653D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kraxmas.Android", "Kraxmas.Android\Kraxmas.Android.csproj", "{2F697345-0B30-4090-950D-69AB11BC72F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTD.Android", "OpenTD.Android\OpenTD.Android.csproj", "{2F697345-0B30-4090-950D-69AB11BC72F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kraxmas.Core", "Kraxmas.Core\Kraxmas.Core.csproj", "{225FC8DE-1CDC-49CB-A90C-ED659EB29968}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTD.Core", "OpenTD.Core\OpenTD.Core.csproj", "{225FC8DE-1CDC-49CB-A90C-ED659EB29968}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kraxmas.LevelEditor", "Kraxmas.LevelEditor\Kraxmas.LevelEditor.csproj", "{01DBF740-4DCA-46ED-A8A2-957B51D0AA02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTD.LevelEditor", "OpenTD.LevelEditor\OpenTD.LevelEditor.csproj", "{01DBF740-4DCA-46ED-A8A2-957B51D0AA02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 using Myra.Graphics2D.UI;
 
-namespace Kraxmas.LevelEditor
+namespace OpenTD.LevelEditor
 {
 	public class MainPanel : Panel
 	{

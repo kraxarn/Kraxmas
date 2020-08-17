@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("Kraxmas.Android.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("OpenTD.Android.Resource", IsApplication=true)]
 
-namespace Kraxmas.Android
+namespace OpenTD.Android
 {
 	
 	

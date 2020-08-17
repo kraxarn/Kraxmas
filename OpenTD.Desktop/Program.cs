@@ -1,7 +1,7 @@
 ﻿using System;
-using Kraxmas.Core;
+using OpenTD.Core;
 
-namespace Kraxmas.Desktop
+namespace OpenTD.Desktop
 {
 	public static class Program
 	{

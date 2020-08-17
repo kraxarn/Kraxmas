@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Kraxmas.Core
+namespace OpenTD.Core
 {
 	public class MainGame : Game
 	{

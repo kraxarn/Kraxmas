@@ -1,10 +1,10 @@
-# 2D Platformer framework in C# using MonoGame
+# 2D Tower defense framework in C# using MonoGame
 Work-in-progress, not usable yet
 
 ## Projects:
-| Folder              | Description          |
-| ------------------- | -------------------- |
-| Kraxmas.Core        | Main game logic      |
-| Kraxmas.Desktop     | Desktop launcher     |
-| Kraxmas.Android     | Android launcher     |
-| Kraxmas.LevelEditor | Desktop level editor |
+| Folder             | Description          |
+| ------------------ | -------------------- |
+| OpenTD.Core        | Main game logic      |
+| OpenTD.Desktop     | Desktop launcher     |
+| OpenTD.Android     | Android launcher     |
+| OpenTD.LevelEditor | Desktop level editor |

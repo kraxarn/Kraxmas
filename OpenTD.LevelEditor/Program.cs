@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kraxmas.LevelEditor
+namespace OpenTD.LevelEditor
 {
     public static class Program
     {
