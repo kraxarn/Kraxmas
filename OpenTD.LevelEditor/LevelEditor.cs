@@ -9,8 +9,12 @@ namespace OpenTD.LevelEditor
 	{
 		private readonly GraphicsDeviceManager graphics;
 		private SpriteBatch spriteBatch;
-		private Desktop desktop;
 		private MainPanel mainPanel;
+
+		public Desktop Desktop { get; private set; }
+		public Texture2D MenuIcons { get; private set; }
+
+		public Color BackgroundColor = new Color(0x4c, 0xaf, 0x50);
 
 		public LevelEditor()
 		{
@@ -20,6 +24,7 @@ namespace OpenTD.LevelEditor
 				PreferredBackBufferHeight = 720
 			};
 			Window.AllowUserResizing = true;
+			Window.Title = "OpenTD Level Editor";
 			Content.RootDirectory = "Content";
 			IsMouseVisible = true;
 
@@ -39,12 +44,14 @@ namespace OpenTD.LevelEditor
 		protected override void LoadContent()
 		{
 			base.LoadContent();
-
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			mainPanel = new MainPanel();
+			// Images
+			MenuIcons = Content.Load<Texture2D>("Image/MenuIcons");
 
-			desktop = new Desktop
+			// UI
+			mainPanel = new MainPanel(this);
+			Desktop = new Desktop
 			{
 				HasExternalTextInput = true,
 				Root = mainPanel
@@ -55,9 +62,9 @@ namespace OpenTD.LevelEditor
 		{
 			base.Draw(gameTime);
 
-			GraphicsDevice.Clear(Color.Black);
+			GraphicsDevice.Clear(BackgroundColor);
 
-			desktop.Render();
+			Desktop.Render();
 		}
 	}
 }
