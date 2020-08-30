@@ -58,6 +58,12 @@ namespace OpenTD.LevelEditor
 			};
 		}
 
+		protected override void UnloadContent()
+		{
+			Content.Unload();
+			base.UnloadContent();
+		}
+
 		protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
