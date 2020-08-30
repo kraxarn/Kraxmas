@@ -28,4 +28,7 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
     <PackageReference Include="Myra" Version="1.0.0.205" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenTD.Common\OpenTD.Common.csproj" />
+  </ItemGroup>
 </Project>
