@@ -14,7 +14,7 @@ namespace OpenTD.LevelEditor
 		public Desktop Desktop { get; private set; }
 		public Texture2D MenuIcons { get; private set; }
 
-		public Color BackgroundColor = new Color(0x4c, 0xaf, 0x50);
+		public Color BackgroundColor = new Color(0x2e, 0xcc, 0x71);
 
 		public LevelEditor()
 		{
