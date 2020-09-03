@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
@@ -13,8 +16,11 @@ namespace OpenTD.LevelEditor
 
 		public Desktop Desktop { get; private set; }
 		public Texture2D MenuIcons { get; private set; }
+		public Music Music { get; private set; }
 
 		public Color BackgroundColor = new Color(0x2e, 0xcc, 0x71);
+
+		private Texture2D LineTexture;
 
 		public LevelEditor()
 		{
@@ -29,6 +35,7 @@ namespace OpenTD.LevelEditor
 			IsMouseVisible = true;
 
 			MyraEnvironment.Game = this;
+			Music = new Music(this);
 		}
 
 		protected override void Initialize()
@@ -45,6 +52,9 @@ namespace OpenTD.LevelEditor
 		{
 			base.LoadContent();
 			spriteBatch = new SpriteBatch(GraphicsDevice);
+			
+			// Primitives
+			LineTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 
 			// Images
 			MenuIcons = Content.Load<Texture2D>("Image/MenuIcons");
@@ -69,6 +79,10 @@ namespace OpenTD.LevelEditor
 			base.Draw(gameTime);
 
 			GraphicsDevice.Clear(BackgroundColor);
+			
+			spriteBatch.Begin();
+			spriteBatch.Draw(LineTexture, new Rectangle(64, 64, 64, 1), Color.White);
+			spriteBatch.End();
 
 			Desktop.Render();
 		}

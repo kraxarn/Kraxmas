@@ -37,7 +37,7 @@ namespace OpenTD.LevelEditor
 					Image = GetIconImage(0, 0)
 				};
 				menu.Items.Add(menuFileNew);
-				
+
 				var open = new FileDialog(FileDialogMode.OpenFile);
 
 				var menuFileOpen = new MenuItem("menuFileOpen", "Open...")
@@ -46,7 +46,7 @@ namespace OpenTD.LevelEditor
 				};
 				menuFileOpen.Selected += (sender, args) => open.Show(parent.Desktop);
 				menu.Items.Add(menuFileOpen);
-				
+
 				var save = new FileDialog(FileDialogMode.SaveFile)
 				{
 					Filter = ".tdm"
@@ -77,10 +77,13 @@ namespace OpenTD.LevelEditor
 			{
 				var menu = new MenuItem("menuEdit", "Edit");
 
-				menu.Items.Add(new MenuItem("menuEditMusic", "Music...")
+				var music = new MenuItem("menuEditMusic", "Music...")
 				{
 					Image = GetIconImage(1, 0)
-				});
+				};
+				music.Selected += (sender, args) => new MusicSelectDialog(parent).ShowModal(parent.Desktop);
+				menu.Items.Add(music);
+
 				menu.Items.Add(new MenuItem("menuEditTileset", "Tileset...")
 				{
 					Image = GetIconImage(1, 1)
