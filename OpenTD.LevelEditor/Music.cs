@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using OpenTD.LevelEditor.Enum;
@@ -27,6 +28,9 @@ namespace OpenTD.LevelEditor
 			[MusicTrack.WelkinWing] = "Welkin wing",
 			[MusicTrack.Wingless] = "Wingless"
 		};
+
+		public static KeyValuePair<MusicTrack, string> RandomName =>
+			FileNames.ToArray()[new Random().Next(FileNames.Count)];
 
 		public TimeSpan Play(string name) =>
 			System.Enum.TryParse(name, out MusicTrack track)

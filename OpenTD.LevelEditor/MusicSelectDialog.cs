@@ -13,30 +13,37 @@ namespace OpenTD.LevelEditor
 			Width = 200;
 
 			var music = levelEditor.Music;
+			var (currentId, currentName) = Music.RandomName;
 
 			var stack = new VerticalStackPanel
 			{
-				Spacing = 8
+				Spacing = 12
 			};
 			stack.Widgets.Add(new Label
 			{
-				Text = "Music to use for the level"
+				Text = $"Current: {currentName}"
 			});
 
-			var comboBox = new ComboBox();
+			var comboBox = new ComboBox
+			{
+				HorizontalAlignment = HorizontalAlignment.Stretch
+			};
 			foreach (var (track, name) in Music.FileNames)
 			{
 				comboBox.Items.Add(new ListItem
 				{
 					Id = track.ToString(),
-					Text = name
+					Text = name,
+					IsSelected = track == currentId
 				});
 			}
+
+			comboBox.SelectedIndex = (int) currentId;
 			stack.Widgets.Add(comboBox);
 			
 			var progressStack = new HorizontalStackPanel
 			{
-				Spacing = 8
+				Spacing = 12
 			};
 			
 			var progress = new Label
