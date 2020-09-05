@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Timers;
 using Microsoft.Xna.Framework.Media;
 using Myra.Graphics2D.UI;
@@ -13,7 +14,7 @@ namespace OpenTD.LevelEditor
 			Width = 200;
 
 			var music = levelEditor.Music;
-			var (currentId, currentName) = Music.RandomName;
+			var (currentId, currentName) = music.RandomName;
 
 			var stack = new VerticalStackPanel
 			{
@@ -28,17 +29,17 @@ namespace OpenTD.LevelEditor
 			{
 				HorizontalAlignment = HorizontalAlignment.Stretch
 			};
-			foreach (var (track, name) in Music.FileNames)
+			foreach (var (track, name) in music.FileNames)
 			{
 				comboBox.Items.Add(new ListItem
 				{
-					Id = track.ToString(),
-					Text = name,
-					IsSelected = track == currentId
+					Id = track,
+					Text = name
 				});
 			}
 
-			comboBox.SelectedIndex = (int) currentId;
+			comboBox.SelectedItem = comboBox.Items
+				.FirstOrDefault(i => i.Id == currentId);
 			stack.Widgets.Add(comboBox);
 			
 			var progressStack = new HorizontalStackPanel

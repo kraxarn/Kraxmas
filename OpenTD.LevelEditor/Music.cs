@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
-using OpenTD.LevelEditor.Enum;
 
 namespace OpenTD.LevelEditor
 {
@@ -11,33 +13,29 @@ namespace OpenTD.LevelEditor
 	{
 		private readonly ContentManager contentManager;
 
-		public Music(LevelEditor levelEditor)
+		public readonly Dictionary<string, string> FileNames;
+
+		public Music(Game game)
 		{
-			contentManager = levelEditor.Content;
+			contentManager = game.Content;
+
+			FileNames = new Dictionary<string, string>();
+
+			foreach (var fileName in Directory
+				.EnumerateFiles(Path.Combine(contentManager.RootDirectory, "Music"), "*.ogg"))
+			{
+				var name = Path.GetFileNameWithoutExtension(fileName);
+				var trackName = Regex.Replace(name, "([a-z])([A-Z])", "$1 $2");
+				trackName = $"{char.ToUpper(trackName[0])}{trackName[1..].ToLower()}";
+
+				FileNames[name] = trackName;
+			}
 		}
 
-		public static readonly Dictionary<MusicTrack, string> FileNames = new Dictionary<MusicTrack, string>
-		{
-			[MusicTrack.BastardZone] = "Bastard zone",
-			[MusicTrack.Frenetic] = "Frenetic",
-			[MusicTrack.GroovyTower] = "Groovy tower",
-			[MusicTrack.HexagonForce] = "Hexagon force",
-			[MusicTrack.HiddenPath] = "Hidden path",
-			[MusicTrack.KeepGoing] = "Keep going",
-			[MusicTrack.RaceAroundTheDesert] = "Race around the desert",
-			[MusicTrack.WelkinWing] = "Welkin wing",
-			[MusicTrack.Wingless] = "Wingless"
-		};
-
-		public static KeyValuePair<MusicTrack, string> RandomName =>
+		public KeyValuePair<string, string> RandomName =>
 			FileNames.ToArray()[new Random().Next(FileNames.Count)];
 
-		public TimeSpan Play(string name) =>
-			System.Enum.TryParse(name, out MusicTrack track)
-				? Play(track)
-				: TimeSpan.Zero;
-
-		public TimeSpan Play(MusicTrack track)
+		public TimeSpan Play(string track)
 		{
 			var song = contentManager.Load<Song>($"Music/{track}");
 			if (song == null)

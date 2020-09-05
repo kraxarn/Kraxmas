@@ -31,4 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OpenTD.Common\OpenTD.Common.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enum" />
+  </ItemGroup>
 </Project>
