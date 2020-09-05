@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Myra;
 using Myra.Graphics2D;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
@@ -21,6 +19,7 @@ namespace OpenTD.LevelEditor
 			var menu = new HorizontalMenu();
 			menu.Items.Add(FileMenu);
 			menu.Items.Add(EditMenu);
+			menu.Items.Add(ViewMenu);
 			menu.Items.Add(HelpMenu);
 
 			Widgets.Add(menu);
@@ -124,6 +123,18 @@ namespace OpenTD.LevelEditor
 					Image = GetIconImage(2, 1)
 				});
 
+				return menu;
+			}
+		}
+
+		private MenuItem ViewMenu
+		{
+			get
+			{
+				var menu = new MenuItem("menuView", "View");
+				
+				menu.Items.Add(new MenuItem("menuViewGrid", "Hide grid"));
+				
 				return menu;
 			}
 		}
