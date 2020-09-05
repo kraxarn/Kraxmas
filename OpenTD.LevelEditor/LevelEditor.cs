@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
@@ -16,11 +14,13 @@ namespace OpenTD.LevelEditor
 
 		public Desktop Desktop { get; private set; }
 		public Texture2D MenuIcons { get; private set; }
-		public Music Music { get; private set; }
+		public Music Music { get; }
 
 		public Color BackgroundColor = new Color(0x2e, 0xcc, 0x71);
 
-		private Texture2D LineTexture;
+		private Texture2D lineTexture;
+		private Color lineColor;
+		private Rectangle[] lineDestinations;
 
 		public LevelEditor()
 		{
@@ -29,7 +29,6 @@ namespace OpenTD.LevelEditor
 				PreferredBackBufferWidth = 1280,
 				PreferredBackBufferHeight = 720
 			};
-			Window.AllowUserResizing = true;
 			Window.Title = "OpenTD Level Editor";
 			Content.RootDirectory = "Content";
 			IsMouseVisible = true;
@@ -48,13 +47,39 @@ namespace OpenTD.LevelEditor
 			base.Initialize();
 		}
 
+		private void LoadLineDestinations()
+		{
+			const int tileSize = 36;
+			var width = graphics.PreferredBackBufferWidth;
+			var height = graphics.PreferredBackBufferHeight;
+
+			lineDestinations = new Rectangle[(width / tileSize) * (height / tileSize)];
+			var i = 0;
+
+			// Vertical lines
+			for (var x = tileSize; x < width; x += tileSize)
+				lineDestinations[i++] = new Rectangle(x, 0, 1, height);
+
+			// Horizontal lines
+			for (var y = tileSize; y < height; y += tileSize)
+				lineDestinations[i++] = new Rectangle(0, y, width, 1);
+		}
+
 		protected override void LoadContent()
 		{
 			base.LoadContent();
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-			
+
 			// Primitives
-			LineTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+			lineTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+			lineTexture.SetData(new[]
+			{
+				Color.White
+			});
+			lineColor = new Color(0x0, 0x0, 0x0, 0xf);
+			LoadLineDestinations();
+
+			Console.WriteLine(Content.RootDirectory);
 
 			// Images
 			MenuIcons = Content.Load<Texture2D>("Image/MenuIcons");
@@ -79,9 +104,15 @@ namespace OpenTD.LevelEditor
 			base.Draw(gameTime);
 
 			GraphicsDevice.Clear(BackgroundColor);
-			
+
+
 			spriteBatch.Begin();
-			spriteBatch.Draw(LineTexture, new Rectangle(64, 64, 64, 1), Color.White);
+
+			foreach (var dest in lineDestinations)
+			{
+				spriteBatch.Draw(lineTexture, dest, lineColor);
+			}
+
 			spriteBatch.End();
 
 			Desktop.Render();
