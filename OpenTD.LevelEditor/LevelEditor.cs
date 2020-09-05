@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
@@ -78,8 +77,6 @@ namespace OpenTD.LevelEditor
 			});
 			lineColor = new Color(0x0, 0x0, 0x0, 0xf);
 			LoadLineDestinations();
-
-			Console.WriteLine(Content.RootDirectory);
 
 			// Images
 			MenuIcons = Content.Load<Texture2D>("Image/MenuIcons");
