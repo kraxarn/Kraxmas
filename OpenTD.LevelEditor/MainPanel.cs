@@ -8,7 +8,7 @@ using OpenTD.Common;
 
 namespace OpenTD.LevelEditor
 {
-	public class MainPanel : Panel
+	public sealed class MainPanel : Panel
 	{
 		private readonly LevelEditor parent;
 
