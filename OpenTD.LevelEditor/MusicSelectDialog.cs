@@ -29,12 +29,12 @@ namespace OpenTD.LevelEditor
 			{
 				HorizontalAlignment = HorizontalAlignment.Stretch
 			};
-			foreach (var (track, name) in music.FileNames)
+			foreach (var name in music.FileNames)
 			{
 				comboBox.Items.Add(new ListItem
 				{
-					Id = track,
-					Text = name
+					Id = name,
+					Text = Music.FormatName(name)
 				});
 			}
 

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
@@ -13,27 +12,34 @@ namespace OpenTD.LevelEditor
 	{
 		private readonly ContentManager contentManager;
 
-		public readonly Dictionary<string, string> FileNames;
+		public readonly HashSet<string> FileNames;
 
 		public Music(Game game)
 		{
 			contentManager = game.Content;
 
-			FileNames = new Dictionary<string, string>();
-
-			foreach (var fileName in Directory
-				.EnumerateFiles(Path.Combine(contentManager.RootDirectory, "Music"), "*.ogg"))
+			FileNames = new HashSet<string>
 			{
-				var name = Path.GetFileNameWithoutExtension(fileName);
-				var trackName = Regex.Replace(name, "([a-z])([A-Z])", "$1 $2");
-				trackName = $"{char.ToUpper(trackName[0])}{trackName[1..].ToLower()}";
+				"Caketown",
+				"Snowland"
+			};
+		}
 
-				FileNames[name] = trackName;
+		public (string id, string name) RandomName
+		{
+			get
+			{
+				var randomName = FileNames.ToArray()[new Random().Next(FileNames.Count)];
+				return (randomName, FormatName(randomName));
 			}
 		}
 
-		public KeyValuePair<string, string> RandomName =>
-			FileNames.ToArray()[new Random().Next(FileNames.Count)];
+		public static string FormatName(string name)
+		{
+			name = Regex.Replace(name, "([a-z])([A-Z])", "$1 $2");
+			name = $"{char.ToUpper(name[0])}{name[1..].ToLower()}";
+			return name;
+		}
 
 		public TimeSpan Play(string track)
 		{

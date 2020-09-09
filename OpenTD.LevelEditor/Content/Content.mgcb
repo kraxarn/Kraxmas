@@ -25,57 +25,15 @@
 /processorParam:TextureFormat=Color
 /build:Image/MenuIcons.png
 
-#begin Music/BastardZone.ogg
+#begin Music/Caketown.ogg
 /importer:OggImporter
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Music/BastardZone.ogg
+/build:Music/Caketown.ogg
 
-#begin Music/Frenetic.ogg
+#begin Music/Snowland.ogg
 /importer:OggImporter
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Music/Frenetic.ogg
-
-#begin Music/GroovyTower.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/GroovyTower.ogg
-
-#begin Music/HexagonForce.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/HexagonForce.ogg
-
-#begin Music/HiddenPath.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/HiddenPath.ogg
-
-#begin Music/KeepGoing.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/KeepGoing.ogg
-
-#begin Music/RaceAroundTheDesert.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/RaceAroundTheDesert.ogg
-
-#begin Music/WelkinWing.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/WelkinWing.ogg
-
-#begin Music/Wingless.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/Wingless.ogg
+/build:Music/Snowland.ogg
 
