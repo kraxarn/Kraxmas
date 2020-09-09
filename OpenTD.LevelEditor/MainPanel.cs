@@ -35,6 +35,7 @@ namespace OpenTD.LevelEditor
 				{
 					Image = GetIconImage(0, 0)
 				};
+				menuFileNew.Selected += (s, a) => parent.NewLevel();
 				menu.Items.Add(menuFileNew);
 
 				var open = new FileDialog(FileDialogMode.OpenFile);

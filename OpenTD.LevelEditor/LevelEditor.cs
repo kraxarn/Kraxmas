@@ -15,7 +15,7 @@ namespace OpenTD.LevelEditor
 		public Texture2D MenuIcons { get; private set; }
 		public Music Music { get; }
 
-		public Color BackgroundColor = new Color(0x2e, 0xcc, 0x71);
+		public Color BackgroundColor;
 
 		private Texture2D lineTexture;
 		private Color lineColor;
@@ -34,6 +34,12 @@ namespace OpenTD.LevelEditor
 
 			MyraEnvironment.Game = this;
 			Music = new Music(this);
+			NewLevel();
+		}
+
+		public void NewLevel()
+		{
+			BackgroundColor = new Color(0x2e, 0xcc, 0x71);
 		}
 
 		protected override void Initialize()
