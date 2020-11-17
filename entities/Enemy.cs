@@ -1,6 +1,6 @@
 using Godot;
 
-public class Enemy : RigidBody2D
+public class Enemy : KinematicBody2D
 {
 	[Signal]
 	public delegate void Hit();

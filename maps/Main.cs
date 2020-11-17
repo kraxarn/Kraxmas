@@ -1,16 +1,14 @@
-using System.Collections.Generic;
 using Godot;
 
 public class Main : Node
 {
 	[Export] public PackedScene Enemy;
+	[Export] public PackedScene Tower;
 
 	private TextureRect selection;
 	private Label debugInfo;
 	private Timer enemyTimer;
 	private ColorRect cover;
-
-	private Node[,] towers;
 
 	private int health = 100;
 
@@ -19,9 +17,6 @@ public class Main : Node
 		selection = GetNode<TextureRect>("Selection");
 		debugInfo = GetNode<Label>("DebugInfo");
 		cover = GetNode<ColorRect>("Cover");
-
-		var viewport = GetViewport();
-		towers = new Node[(int) (viewport.Size.x / 64), (int) (viewport.Size.y / 64)];
 
 		enemyTimer = GetNode<Timer>("EnemyTimer");
 		enemyTimer.Connect("timeout", this, nameof(OnEnemyTimerTimeout));
@@ -38,6 +33,15 @@ public class Main : Node
 		{
 			var center = mouseMotion.Position - selection.RectSize / 2;
 			selection.RectPosition = new Vector2(Mathf.Round(center.x / 64) * 64, Mathf.Round(center.y / 64) * 64);
+		}
+		else if (input is InputEventMouseButton mouseButton)
+		{
+			if (mouseButton.Pressed)
+			{
+				var tower = (Tower) Tower.Instance();
+				tower.Position = selection.RectPosition + selection.RectSize / 2;
+				AddChild(tower);
+			}
 		}
 	}
 
@@ -57,6 +61,7 @@ public class Main : Node
 		if (health <= 0)
 		{
 			cover.Show();
+			enemyTimer.Stop();
 			return;
 		}
 		health -= 5;

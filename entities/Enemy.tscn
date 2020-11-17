@@ -4,9 +4,10 @@
 [ext_resource path="res://entities/Enemy.cs" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 30.0835
+radius = 40.0
 
-[node name="RigidBody2D" type="RigidBody2D"]
+[node name="RigidBody2D" type="KinematicBody2D"]
+collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
