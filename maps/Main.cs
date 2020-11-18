@@ -10,13 +10,16 @@ public class Main : Node
 	private Timer enemyTimer;
 	private ColorRect cover;
 
-	private int health = 100;
+	private Pause pause;
+	private Hud hud;
 
 	public override void _Ready()
 	{
 		selection = GetNode<TextureRect>("Selection");
 		debugInfo = GetNode<Label>("DebugInfo");
 		cover = GetNode<ColorRect>("Cover");
+		pause = GetNode<Pause>(nameof(Pause));
+		hud = GetNode<Hud>(nameof(Hud));
 
 		enemyTimer = GetNode<Timer>("EnemyTimer");
 		enemyTimer.Connect("timeout", this, nameof(OnEnemyTimerTimeout));
@@ -24,7 +27,12 @@ public class Main : Node
 
 	public override void _Process(float delta)
 	{
-		debugInfo.Text = $"FPS: {Engine.GetFramesPerSecond()}\nHP: {health}";
+		hud.DebugInfo = $"FPS: {Engine.GetFramesPerSecond()}";
+
+		if (Input.IsActionJustPressed("ui_cancel"))
+		{
+			pause.PopupCentered();
+		}
 	}
 
 	public override void _Input(InputEvent input)
@@ -58,12 +66,13 @@ public class Main : Node
 
 	public void OnEnemyHit()
 	{
-		if (health <= 0)
+		if (hud.Health <= 0)
 		{
 			cover.Show();
 			enemyTimer.Stop();
 			return;
 		}
-		health -= 5;
+
+		hud.Health -= 5;
 	}
 }
