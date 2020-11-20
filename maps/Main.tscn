@@ -121,6 +121,13 @@ __meta__ = {
 wait_time = 2.0
 autostart = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Pause" parent="." instance=ExtResource( 8 )]
+
+[node name="Hud" parent="." instance=ExtResource( 10 )]
+
 [node name="Cover" type="ColorRect" parent="."]
 visible = false
 anchor_right = 1.0
@@ -129,13 +136,6 @@ color = Color( 0, 0, 0, 0.498039 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
-
-[node name="Pause" parent="." instance=ExtResource( 8 )]
-
-[node name="Hud" parent="." instance=ExtResource( 10 )]
 
 [node name="SidePanel" type="NinePatchRect" parent="."]
 margin_left = 1152.0

@@ -2,31 +2,48 @@ using Godot;
 
 public class Tower : Area2D
 {
-    private Enemy target;
-    
-    public override void _Ready()
-    {
-        RotationDegrees = -90;
-        
-        Connect("body_entered", this, nameof(OnBodyEntered));
-        Connect("body_exited", this, nameof(OnBodyExited));
-    }
+	[Export] public PackedScene Projectile;
 
-    public override void _Process(float delta)
-    {
-        if (target != null)
-            LookAt(target.Position);
-    }
+	private Enemy target;
 
-    public void OnBodyEntered(Node node)
-    {
-        if (node is Enemy enemy)
-            target = enemy;
-    }
+	private const float Cooldown = 1f;
 
-    public void OnBodyExited(Node node)
-    {
-        if (node == target)
-            target = null;
-    }
+	private float cooldown = Cooldown;
+
+	public override void _Ready()
+	{
+		RotationDegrees = -90;
+
+		Connect("body_entered", this, nameof(OnBodyEntered));
+		Connect("body_exited", this, nameof(OnBodyExited));
+	}
+
+	public override void _Process(float delta)
+	{
+		cooldown -= delta;
+
+		if (target == null)
+			return;
+		LookAt(target.Position);
+
+		if (cooldown <= 0)
+		{
+			cooldown = Cooldown;
+			var bullet = (Bullet) Projectile.Instance();
+			GetParent<Main>().AddChild(bullet);
+			bullet.Fire(this, target.GlobalPosition);
+		}
+	}
+
+	public void OnBodyEntered(Node node)
+	{
+		if (node is Enemy enemy)
+			target = enemy;
+	}
+
+	public void OnBodyExited(Node node)
+	{
+		if (node == target)
+			target = null;
+	}
 }

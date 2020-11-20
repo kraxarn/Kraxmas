@@ -4,13 +4,29 @@ public class Enemy : KinematicBody2D
 {
 	[Signal]
 	public delegate void Hit();
-	
+
 	private Path2D path;
 	private PathFollow2D pathFollow;
 
-	private float traverseTime = 15;
-	private float t = 0;
+	private const float TraverseTime = 15;
+	private float t;
 	private float pathLength;
+
+	private int health = 1;
+
+	public int Health
+	{
+		get => health;
+		set
+		{
+			health = value;
+			if (health > 0)
+				return;
+
+			QueueFree();
+			GetParent<Main>().Hud.Money += 10;
+		}
+	}
 
 	public override void _Ready()
 	{
@@ -23,14 +39,15 @@ public class Enemy : KinematicBody2D
 
 	public override void _Process(float delta)
 	{
-		if (t > traverseTime)
+		if (t > TraverseTime)
 		{
 			EmitSignal("Hit");
 			QueueFree();
 		}
+
 		t += delta;
 
-		pathFollow.Offset = t / traverseTime * pathLength;
+		pathFollow.Offset = t / TraverseTime * pathLength;
 		Position = pathFollow.Position;
 		Rotation = pathFollow.Rotation;
 	}

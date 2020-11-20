@@ -5,29 +5,36 @@ public class Main : Node
 	[Export] public PackedScene Enemy;
 	[Export] public PackedScene Tower;
 
+	[Signal]
+	public delegate void MoneyAdd(int amount);
+
 	private TextureRect selection;
-	private Label debugInfo;
 	private Timer enemyTimer;
 	private ColorRect cover;
 
 	private Pause pause;
-	private Hud hud;
+	public Hud Hud { get; private set; }
+
+	private int totalEnemies;
 
 	public override void _Ready()
 	{
 		selection = GetNode<TextureRect>("Selection");
-		debugInfo = GetNode<Label>("DebugInfo");
 		cover = GetNode<ColorRect>("Cover");
 		pause = GetNode<Pause>(nameof(Pause));
-		hud = GetNode<Hud>(nameof(Hud));
+		Hud = GetNode<Hud>("Hud");
 
 		enemyTimer = GetNode<Timer>("EnemyTimer");
 		enemyTimer.Connect("timeout", this, nameof(OnEnemyTimerTimeout));
+
+		Connect("MoneyAdd", this, nameof(OnMoneyAdd));
+
+		//GetTree().DebugCollisionsHint = true;
 	}
 
 	public override void _Process(float delta)
 	{
-		hud.DebugInfo = $"FPS: {Engine.GetFramesPerSecond()}";
+		Hud.DebugInfo = $"FPS: {Engine.GetFramesPerSecond()}\nLevel: {Mathf.FloorToInt(totalEnemies / 10f + 1)}";
 
 		if (Input.IsActionJustPressed("ui_cancel"))
 		{
@@ -44,11 +51,12 @@ public class Main : Node
 		}
 		else if (input is InputEventMouseButton mouseButton)
 		{
-			if (mouseButton.Pressed)
+			if (mouseButton.Pressed && Hud.Money >= 50)
 			{
 				var tower = (Tower) Tower.Instance();
 				tower.Position = selection.RectPosition + selection.RectSize / 2;
 				AddChild(tower);
+				Hud.Money -= 50;
 			}
 		}
 	}
@@ -59,20 +67,27 @@ public class Main : Node
 			enemyTimer.WaitTime *= 0.98f;
 
 		var enemy = (Enemy) Enemy.Instance();
+		enemy.Health = Mathf.FloorToInt(totalEnemies / 10f + 1);
 		AddChild(enemy);
+		totalEnemies++;
 
 		enemy.Connect("Hit", this, nameof(OnEnemyHit));
 	}
 
 	public void OnEnemyHit()
 	{
-		if (hud.Health <= 0)
+		if (Hud.Health <= 0)
 		{
 			cover.Show();
 			enemyTimer.Stop();
 			return;
 		}
 
-		hud.Health -= 5;
+		Hud.Health -= 5;
+	}
+
+	public void OnMoneyAdd(int amount)
+	{
+		Hud.Money += amount;
 	}
 }

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public class Hud : MarginContainer
 {
@@ -44,6 +43,6 @@ public class Hud : MarginContainer
 		debugInfo = GetNode<Label>("HBox/DebugInfo");
 
 		Health = 100;
-		Money = 500;
+		Money = 100;
 	}
 }
