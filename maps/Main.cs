@@ -11,6 +11,22 @@ public class Main : Node
 
 	private Pause pause;
 	public Hud Hud { get; private set; }
+	private AudioStreamPlayer music;
+
+	private bool debugMode;
+
+	private bool DebugMode
+	{
+		get => debugMode;
+		set
+		{
+			Hud.DebugInfo = string.Empty;
+			var tree = GetTree();
+			tree.DebugCollisionsHint = value;
+			tree.DebugNavigationHint = value;
+			debugMode = value;
+		}
+	}
 
 	private int totalEnemies;
 
@@ -30,19 +46,27 @@ public class Main : Node
 		cover = GetNode<ColorRect>("Cover");
 		pause = GetNode<Pause>(nameof(Pause));
 		Hud = GetNode<Hud>("Hud");
+		music = GetNode<AudioStreamPlayer>("Music");
 
 		enemyTimer = GetNode<Timer>("EnemyTimer");
 		enemyTimer.Connect("timeout", this, nameof(OnEnemyTimerTimeout));
 
-		//GetTree().DebugCollisionsHint = true;
+		DebugMode = false;
+
+		var config = new Config();
+		SetMusicVolume(config.MusicVolume);
+		music.Play();
 	}
 
 	public override void _Process(float delta)
 	{
-		Hud.DebugInfo = $"FPS: {Engine.GetFramesPerSecond()}";
+		if (DebugMode)
+			Hud.DebugInfo = $"FPS: {Engine.GetFramesPerSecond()}";
 
 		if (Input.IsActionJustPressed("ui_cancel"))
-			pause.PopupCentered();
+			Pause(true);
+		if (Input.IsActionJustPressed("ui_debug"))
+			DebugMode = !DebugMode;
 	}
 
 	public override void _Input(InputEvent input)
