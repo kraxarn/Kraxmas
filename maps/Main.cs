@@ -40,6 +40,18 @@ public class Main : Node
 		}
 	}
 
+	public int Money
+	{
+		get => Hud.Money;
+		set
+		{
+			selection.Modulate = value < 50
+				? Colors.Unavailable
+				: Colors.Available;
+			Hud.Money = value;
+		}
+	}
+
 	public override void _Ready()
 	{
 		selection = GetNode<TextureRect>("Selection");

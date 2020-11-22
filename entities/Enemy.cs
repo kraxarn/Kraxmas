@@ -24,7 +24,7 @@ public class Enemy : KinematicBody2D
 			if (health > 0)
 				return;
 
-			Parent.Hud.Money += 10;
+			Parent.Money += 10;
 			Explode();
 			QueueFree();
 		}
