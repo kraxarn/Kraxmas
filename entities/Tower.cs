@@ -5,6 +5,7 @@ public class Tower : Area2D
 	[Export] public PackedScene Projectile;
 
 	private Enemy target;
+	private Node parent;
 
 	private const float Cooldown = 1f;
 
@@ -13,6 +14,8 @@ public class Tower : Area2D
 	public override void _Ready()
 	{
 		RotationDegrees = -90;
+
+		parent = GetParent();
 
 		Connect("body_entered", this, nameof(OnBodyEntered));
 		Connect("body_exited", this, nameof(OnBodyExited));
@@ -30,7 +33,7 @@ public class Tower : Area2D
 		{
 			cooldown = Cooldown;
 			var bullet = (Bullet) Projectile.Instance();
-			GetParent<Main>().AddChild(bullet);
+			parent.AddChild(bullet);
 			bullet.Fire(this, target.GlobalPosition);
 		}
 	}

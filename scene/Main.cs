@@ -1,17 +1,16 @@
 using Godot;
 
-public class Main : Node
+public class Main : SceneBase
 {
-	[Export] public PackedScene Enemy;
 	[Export] public PackedScene Tower;
 
 	private TextureRect selection;
-	private Timer enemyTimer;
+	
 	private ColorRect cover;
 
 	private Pause pause;
-	public Hud Hud { get; private set; }
-	private AudioStreamPlayer music;
+
+	private TileMap currentMap;
 
 	private bool debugMode;
 
@@ -27,10 +26,10 @@ public class Main : Node
 			debugMode = value;
 		}
 	}
-
+	
 	private int totalEnemies;
 
-	private int TotalEnemies
+	protected override int TotalEnemies
 	{
 		get => totalEnemies;
 		set
@@ -58,16 +57,18 @@ public class Main : Node
 		cover = GetNode<ColorRect>("Cover");
 		pause = GetNode<Pause>(nameof(Pause));
 		Hud = GetNode<Hud>("Hud");
-		music = GetNode<AudioStreamPlayer>("Music");
+		Music = GetNode<AudioStreamPlayer>("Music");
 
-		enemyTimer = GetNode<Timer>("EnemyTimer");
-		enemyTimer.Connect("timeout", this, nameof(OnEnemyTimerTimeout));
+		EnemyTimer = GetNode<Timer>("EnemyTimer");
+		EnemyTimer.Connect("timeout", this, nameof(OnEnemyTimerTimeout));
 
 		DebugMode = false;
 
 		var config = new Config();
 		SetMusicVolume(config.MusicVolume);
-		music.Play();
+		Music.Play();
+
+		LoadMap("Map1");
 	}
 
 	public override void _Process(float delta)
@@ -90,7 +91,7 @@ public class Main : Node
 		}
 		else if (input is InputEventMouseButton mouseButton
 		         && mouseButton.Pressed
-		         && mouseButton.ButtonIndex == (int)ButtonList.Left)
+		         && mouseButton.ButtonIndex == (int) ButtonList.Left)
 		{
 			PlaceTower(selection.RectPosition);
 		}
@@ -110,28 +111,24 @@ public class Main : Node
 		AddChild(tower);
 		Money -= 50;
 	}
-
-	public void OnEnemyTimerTimeout()
+	
+	public override void OnEnemyTimerTimeout()
 	{
 		if (Hud.Level > Hud.MaxLevel)
 		{
 			if (GetTree().GetNodesInGroup("enemies").Count <= 0)
 			{
 				GD.Print("You win!");
-				enemyTimer.Stop();
+				EnemyTimer.Stop();
 			}
 
 			return;
 		}
 
-		if (enemyTimer.WaitTime > 0.25)
-			enemyTimer.WaitTime *= 0.98f;
-
-		var enemy = (Enemy) Enemy.Instance();
-		enemy.Health = Hud.Level;
-		enemy.AddToGroup("enemies");
-		AddChild(enemy);
-		TotalEnemies++;
+		if (EnemyTimer.WaitTime > 0.25)
+			EnemyTimer.WaitTime *= 0.98f;
+		
+		base.OnEnemyTimerTimeout();
 	}
 
 	public void EnemyHit()
@@ -139,22 +136,25 @@ public class Main : Node
 		if (Hud.Health <= 0)
 		{
 			cover.Show();
-			enemyTimer.Stop();
+			EnemyTimer.Stop();
 			return;
 		}
 
 		Hud.Health -= 5;
 	}
 
-	public void Pause(bool paused)
+	public override void Pause(bool paused)
 	{
 		GetTree().Paused = paused;
 		cover.Visible = paused;
 		pause.Visible = paused;
 	}
 
-	public void SetMusicVolume(float value)
+	private void LoadMap(string name)
 	{
-		music.VolumeDb = Mathf.Log(value) * 20;
+		currentMap?.QueueFree();
+		currentMap = (TileMap) ((PackedScene) ResourceLoader.Load($"res://maps/{name}.tscn")).Instance();
+		currentMap.ZIndex = -1;
+		AddChild(currentMap);
 	}
 }

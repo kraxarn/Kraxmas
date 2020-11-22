@@ -13,8 +13,6 @@ public class Enemy : KinematicBody2D
 
 	private int health = 1;
 
-	private Main Parent => GetParent<Main>();
-
 	public int Health
 	{
 		get => health;
@@ -24,7 +22,8 @@ public class Enemy : KinematicBody2D
 			if (health > 0)
 				return;
 
-			Parent.Money += 10;
+			if (GetParent() is Main main)
+				main.Money += 10;
 			Explode();
 			QueueFree();
 		}
@@ -32,7 +31,7 @@ public class Enemy : KinematicBody2D
 
 	public override void _Ready()
 	{
-		path = GetNode<Path2D>("../EnemyPath");
+		path = GetNode<Path2D>("../Map/EnemyPath");
 		pathLength = path.Curve.GetBakedLength();
 
 		pathFollow = new PathFollow2D();
@@ -43,7 +42,7 @@ public class Enemy : KinematicBody2D
 	{
 		if (Progress > TraverseTime)
 		{
-			Parent.EnemyHit();
+			(GetParent() as Main)?.EnemyHit();
 			QueueFree();
 		}
 
@@ -58,7 +57,7 @@ public class Enemy : KinematicBody2D
 	{
 		var particles = (Particles2D)Explosion.Instance();
 		particles.GlobalPosition = GlobalPosition;
-		Parent.AddChild(particles);
+		GetParent().AddChild(particles);
 		particles.OneShot = true;
 		particles.Emitting = true;
 	}
