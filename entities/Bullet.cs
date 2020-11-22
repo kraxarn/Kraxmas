@@ -2,7 +2,7 @@ using Godot;
 
 public class Bullet : RigidBody2D
 {
-	[Export] public int Speed = 600;
+	[Export] public int Speed = 500;
 
 	public override void _Ready()
 	{
