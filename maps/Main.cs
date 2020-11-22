@@ -88,16 +88,27 @@ public class Main : Node
 			var center = mouseMotion.Position - selection.RectSize / 2;
 			selection.RectPosition = new Vector2(Mathf.Round(center.x / 64) * 64, Mathf.Round(center.y / 64) * 64);
 		}
-		else if (input is InputEventMouseButton mouseButton)
+		else if (input is InputEventMouseButton mouseButton
+		         && mouseButton.Pressed
+		         && mouseButton.ButtonIndex == (int)ButtonList.Left)
 		{
-			if (mouseButton.Pressed && Hud.Money >= 50)
-			{
-				var tower = (Tower) Tower.Instance();
-				tower.Position = selection.RectPosition + selection.RectSize / 2;
-				AddChild(tower);
-				Hud.Money -= 50;
-			}
+			PlaceTower(selection.RectPosition);
 		}
+		else if (input is InputEventScreenTouch screenTouch)
+		{
+			PlaceTower(screenTouch.Position);
+		}
+	}
+
+	private void PlaceTower(Vector2 position)
+	{
+		if (Money < 50)
+			return;
+
+		var tower = (Tower) Tower.Instance();
+		tower.Position = position + selection.RectSize / 2;
+		AddChild(tower);
+		Money -= 50;
 	}
 
 	public void OnEnemyTimerTimeout()
