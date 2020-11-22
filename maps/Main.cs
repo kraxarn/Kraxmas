@@ -5,9 +5,6 @@ public class Main : Node
 	[Export] public PackedScene Enemy;
 	[Export] public PackedScene Tower;
 
-	[Signal]
-	public delegate void MoneyAdd(int amount);
-
 	private TextureRect selection;
 	private Timer enemyTimer;
 	private ColorRect cover;
@@ -16,6 +13,16 @@ public class Main : Node
 	public Hud Hud { get; private set; }
 
 	private int totalEnemies;
+
+	private int TotalEnemies
+	{
+		get => totalEnemies;
+		set
+		{
+			Hud.Level = Mathf.FloorToInt(value / 10f + 1);
+			totalEnemies = value;
+		}
+	}
 
 	public override void _Ready()
 	{
@@ -27,19 +34,15 @@ public class Main : Node
 		enemyTimer = GetNode<Timer>("EnemyTimer");
 		enemyTimer.Connect("timeout", this, nameof(OnEnemyTimerTimeout));
 
-		Connect("MoneyAdd", this, nameof(OnMoneyAdd));
-
 		//GetTree().DebugCollisionsHint = true;
 	}
 
 	public override void _Process(float delta)
 	{
-		Hud.DebugInfo = $"FPS: {Engine.GetFramesPerSecond()}\nLevel: {Mathf.FloorToInt(totalEnemies / 10f + 1)}";
+		Hud.DebugInfo = $"FPS: {Engine.GetFramesPerSecond()}";
 
 		if (Input.IsActionJustPressed("ui_cancel"))
-		{
 			pause.PopupCentered();
-		}
 	}
 
 	public override void _Input(InputEvent input)
@@ -63,18 +66,28 @@ public class Main : Node
 
 	public void OnEnemyTimerTimeout()
 	{
+		if (Hud.Level > Hud.MaxLevel)
+		{
+			if (GetTree().GetNodesInGroup("enemies").Count <= 0)
+			{
+				GD.Print("You win!");
+				enemyTimer.Stop();
+			}
+
+			return;
+		}
+
 		if (enemyTimer.WaitTime > 0.25)
 			enemyTimer.WaitTime *= 0.98f;
 
 		var enemy = (Enemy) Enemy.Instance();
-		enemy.Health = Mathf.FloorToInt(totalEnemies / 10f + 1);
+		enemy.Health = Hud.Level;
+		enemy.AddToGroup("enemies");
 		AddChild(enemy);
-		totalEnemies++;
-
-		enemy.Connect("Hit", this, nameof(OnEnemyHit));
+		TotalEnemies++;
 	}
 
-	public void OnEnemyHit()
+	public void EnemyHit()
 	{
 		if (Hud.Health <= 0)
 		{
@@ -84,10 +97,5 @@ public class Main : Node
 		}
 
 		Hud.Health -= 5;
-	}
-
-	public void OnMoneyAdd(int amount)
-	{
-		Hud.Money += amount;
 	}
 }

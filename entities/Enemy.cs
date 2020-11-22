@@ -2,17 +2,18 @@ using Godot;
 
 public class Enemy : KinematicBody2D
 {
-	[Signal]
-	public delegate void Hit();
-
+	[Export] public PackedScene Explosion;
+	
 	private Path2D path;
 	private PathFollow2D pathFollow;
 
 	private const float TraverseTime = 15;
-	private float t;
+	public float Progress { get; private set; }
 	private float pathLength;
 
 	private int health = 1;
+
+	private Main Parent => GetParent<Main>();
 
 	public int Health
 	{
@@ -23,8 +24,9 @@ public class Enemy : KinematicBody2D
 			if (health > 0)
 				return;
 
+			Parent.Hud.Money += 10;
+			Explode();
 			QueueFree();
-			GetParent<Main>().Hud.Money += 10;
 		}
 	}
 
@@ -39,16 +41,25 @@ public class Enemy : KinematicBody2D
 
 	public override void _Process(float delta)
 	{
-		if (t > TraverseTime)
+		if (Progress > TraverseTime)
 		{
-			EmitSignal("Hit");
+			Parent.EnemyHit();
 			QueueFree();
 		}
 
-		t += delta;
+		Progress += delta;
 
-		pathFollow.Offset = t / TraverseTime * pathLength;
+		pathFollow.Offset = Progress / TraverseTime * pathLength;
 		Position = pathFollow.Position;
 		Rotation = pathFollow.Rotation;
+	}
+
+	private void Explode()
+	{
+		var particles = (Particles2D)Explosion.Instance();
+		particles.GlobalPosition = GlobalPosition;
+		Parent.AddChild(particles);
+		particles.OneShot = true;
+		particles.Emitting = true;
 	}
 }
