@@ -134,4 +134,16 @@ public class Main : Node
 
 		Hud.Health -= 5;
 	}
+
+	public void Pause(bool paused)
+	{
+		GetTree().Paused = paused;
+		cover.Visible = paused;
+		pause.Visible = paused;
+	}
+
+	public void SetMusicVolume(float value)
+	{
+		music.VolumeDb = Mathf.Log(value) * 20;
+	}
 }
