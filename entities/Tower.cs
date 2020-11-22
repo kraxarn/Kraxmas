@@ -37,7 +37,7 @@ public class Tower : Area2D
 
 	public void OnBodyEntered(Node node)
 	{
-		if (node is Enemy enemy)
+		if (node is Enemy enemy && (target == null || enemy.Progress > target.Progress))
 			target = enemy;
 	}
 
