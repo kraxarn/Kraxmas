@@ -9,7 +9,7 @@
 [ext_resource path="res://tiles/ui/button_pressed.png" type="Texture" id=7]
 [ext_resource path="res://fonts/Kenney Bold.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://scene/Pause.tscn" type="PackedScene" id=9]
-[ext_resource path="res://music/snowheart_melody.ogg" type="AudioStream" id=10]
+[ext_resource path="res://music/winter_walk.ogg" type="AudioStream" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
