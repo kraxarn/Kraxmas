@@ -64,7 +64,9 @@ public class Main : SceneBase
 		Hud = GetNode<Hud>("Hud");
 		Music = GetNode<AudioStreamPlayer>("Music");
 
-		SoundEffects = Enum.GetValues(typeof(SoundEffect)).Cast<SoundEffect>()
+		SoundEffects = Enum
+			.GetValues(typeof(SoundEffect))
+			.Cast<SoundEffect>()
 			.ToDictionary(k => k,
 				v => GetNode<AudioStreamPlayer2D>($"Sound/{v}"));
 
