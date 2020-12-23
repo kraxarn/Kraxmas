@@ -1,13 +1,14 @@
 using System;
 using System.Linq;
 using Godot;
+using OpenTD;
 
 public class Main : SceneBase
 {
 	[Export] public PackedScene Tower;
 
 	private TextureRect selection;
-	
+
 	private ColorRect cover;
 
 	private Pause pause;
@@ -123,7 +124,7 @@ public class Main : SceneBase
 		AddChild(tower);
 		Money -= 50;
 	}
-	
+
 	public override void OnEnemyTimerTimeout()
 	{
 		if (Hud.Level > Hud.MaxLevel)
