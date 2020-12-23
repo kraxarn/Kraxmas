@@ -38,6 +38,7 @@ public class Pause : Control
 		sound.Value = config.SoundVolume;
 
 		music.Connect("value_changed", this, nameof(OnMusicSliderValueChanged));
+		sound.Connect("value_changed", this, nameof(OnSoundSliderValueChanged));
 	}
 
 	public void Accept()
@@ -55,5 +56,10 @@ public class Pause : Control
 	public void OnMusicSliderValueChanged(float value)
 	{
 		parent.SetMusicVolume(value);
+	}
+
+	public void OnSoundSliderValueChanged(float value)
+	{
+		parent.SetSoundVolume(value);
 	}
 }

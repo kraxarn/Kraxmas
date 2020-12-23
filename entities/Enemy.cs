@@ -1,9 +1,10 @@
 using Godot;
+using OpenTD;
 
 public class Enemy : KinematicBody2D
 {
 	[Export] public PackedScene Explosion;
-	
+
 	private Path2D path;
 	private PathFollow2D pathFollow;
 
@@ -18,11 +19,16 @@ public class Enemy : KinematicBody2D
 		get => health;
 		set
 		{
+			var main = GetParent() as Main;
+
+			if (value < health)
+				main?.PlaySound(value > 0 ? SoundEffect.Hit : SoundEffect.Explosion, Position);
+
 			health = value;
 			if (health > 0)
 				return;
 
-			if (GetParent() is Main main)
+			if (main != null)
 				main.Money += 10;
 			Explode();
 			QueueFree();
@@ -55,7 +61,7 @@ public class Enemy : KinematicBody2D
 
 	private void Explode()
 	{
-		var particles = (Particles2D)Explosion.Instance();
+		var particles = (Particles2D) Explosion.Instance();
 		particles.GlobalPosition = GlobalPosition;
 		GetParent().AddChild(particles);
 		particles.OneShot = true;

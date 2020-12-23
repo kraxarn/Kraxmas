@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://fonts/Kenney Mini.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://sound/hit.wav" type="AudioStream" id=2]
 [ext_resource path="res://scene/Main.cs" type="Script" id=3]
 [ext_resource path="res://tiles/towers/tower1.png" type="Texture" id=4]
 [ext_resource path="res://entities/Enemy.tscn" type="PackedScene" id=5]
@@ -8,8 +9,13 @@
 [ext_resource path="res://scene/Pause.tscn" type="PackedScene" id=7]
 [ext_resource path="res://music/snowheart_melody.ogg" type="AudioStream" id=8]
 [ext_resource path="res://scene/Hud.tscn" type="PackedScene" id=9]
+[ext_resource path="res://sound/explosion.wav" type="AudioStream" id=10]
+[ext_resource path="res://sound/error.wav" type="AudioStream" id=11]
+[ext_resource path="res://sound/upgrade.wav" type="AudioStream" id=12]
+[ext_resource path="res://sound/game_over.wav" type="AudioStream" id=13]
+[ext_resource path="res://sound/hurt.wav" type="AudioStream" id=14]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 24
 font_data = ExtResource( 1 )
 
@@ -32,7 +38,7 @@ visible = false
 margin_left = 16.0
 margin_right = 200.0
 margin_bottom = 128.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 text = "FPS: 0"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -61,3 +67,29 @@ __meta__ = {
 [node name="Pause" parent="." instance=ExtResource( 7 )]
 pause_mode = 2
 visible = false
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="Error" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 11 )
+bus = "Sound"
+
+[node name="Explosion" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 10 )
+bus = "Sound"
+
+[node name="GameOver" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 13 )
+bus = "Sound"
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 2 )
+bus = "Sound"
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 14 )
+bus = "Sound"
+
+[node name="Upgrade" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 12 )
+bus = "Sound"

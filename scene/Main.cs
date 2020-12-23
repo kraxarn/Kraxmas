@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Godot;
 
 public class Main : SceneBase
@@ -26,7 +28,7 @@ public class Main : SceneBase
 			debugMode = value;
 		}
 	}
-	
+
 	private int totalEnemies;
 
 	protected override int TotalEnemies
@@ -51,6 +53,8 @@ public class Main : SceneBase
 		}
 	}
 
+	private Vector2 Center => GetViewport().Size / 2;
+
 	public override void _Ready()
 	{
 		selection = GetNode<TextureRect>("Selection");
@@ -59,6 +63,10 @@ public class Main : SceneBase
 		Hud = GetNode<Hud>("Hud");
 		Music = GetNode<AudioStreamPlayer>("Music");
 
+		SoundEffects = Enum.GetValues(typeof(SoundEffect)).Cast<SoundEffect>()
+			.ToDictionary(k => k,
+				v => GetNode<AudioStreamPlayer2D>($"Sound/{v}"));
+
 		EnemyTimer = GetNode<Timer>("EnemyTimer");
 		EnemyTimer.Connect("timeout", this, nameof(OnEnemyTimerTimeout));
 
@@ -66,6 +74,7 @@ public class Main : SceneBase
 
 		var config = new Config();
 		SetMusicVolume(config.MusicVolume);
+		SetSoundVolume(config.SoundVolume);
 		Music.Play();
 
 		LoadMap("Map1");
@@ -104,7 +113,10 @@ public class Main : SceneBase
 	private void PlaceTower(Vector2 position)
 	{
 		if (Money < 50)
+		{
+			PlaySound(SoundEffect.Error, position);
 			return;
+		}
 
 		var tower = (Tower) Tower.Instance();
 		tower.Position = position + selection.RectSize / 2;
@@ -118,8 +130,8 @@ public class Main : SceneBase
 		{
 			if (GetTree().GetNodesInGroup("enemies").Count <= 0)
 			{
-				GD.Print("You win!");
 				EnemyTimer.Stop();
+				PlaySound(SoundEffect.Upgrade);
 			}
 
 			return;
@@ -127,7 +139,7 @@ public class Main : SceneBase
 
 		if (EnemyTimer.WaitTime > 0.25)
 			EnemyTimer.WaitTime *= 0.98f;
-		
+
 		base.OnEnemyTimerTimeout();
 	}
 
@@ -137,10 +149,22 @@ public class Main : SceneBase
 		{
 			cover.Show();
 			EnemyTimer.Stop();
+			PlaySound(SoundEffect.GameOver);
 			return;
 		}
 
+		PlaySound(SoundEffect.Hurt);
 		Hud.Health -= 5;
+	}
+
+	public void PlaySound(SoundEffect sfx, Vector2? pos = null)
+	{
+		var audio = SoundEffects[sfx];
+		if (audio == null)
+			return;
+
+		audio.Position = pos?.MoveToward(Center, 250) ?? Center;
+		audio.Play();
 	}
 
 	public override void Pause(bool paused)

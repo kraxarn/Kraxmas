@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using OpenTD;
 
 public abstract class SceneBase : Node
 {
@@ -7,8 +10,10 @@ public abstract class SceneBase : Node
 	protected Hud Hud { get; set; }
 
 	protected Timer EnemyTimer;
-	
+
 	protected AudioStreamPlayer Music;
+
+	protected IDictionary<SoundEffect, AudioStreamPlayer2D> SoundEffects;
 
 	protected virtual int TotalEnemies { get; set; }
 
@@ -22,9 +27,19 @@ public abstract class SceneBase : Node
 		AddChild(enemy);
 		TotalEnemies++;
 	}
-	
+
 	public void SetMusicVolume(float value)
 	{
 		Music.VolumeDb = Mathf.Log(value) * 20;
+	}
+
+	public void SetSoundVolume(float value)
+	{
+		if (SoundEffects == null || !SoundEffects.Any())
+			return;
+
+		var volume = Mathf.Log(value) * 20;
+		foreach (var audio in SoundEffects.Values)
+			audio.VolumeDb = volume;
 	}
 }
