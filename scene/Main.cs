@@ -8,12 +8,11 @@ public class Main : SceneBase
 	[Export] public PackedScene Tower;
 
 	private TextureRect selection;
-
 	private ColorRect cover;
 
 	private Pause pause;
-
 	private TileMap currentMap;
+	private MessageScreen messageScreen;
 
 	private bool debugMode;
 
@@ -63,6 +62,7 @@ public class Main : SceneBase
 		pause = GetNode<Pause>(nameof(Pause));
 		Hud = GetNode<Hud>("Hud");
 		Music = GetNode<AudioStreamPlayer>("Music");
+		messageScreen = GetNode<MessageScreen>("MessageScreen");
 
 		SoundEffects = Enum
 			.GetValues(typeof(SoundEffect))
@@ -133,8 +133,7 @@ public class Main : SceneBase
 		{
 			if (GetTree().GetNodesInGroup("enemies").Count <= 0)
 			{
-				EnemyTimer.Stop();
-				PlaySound(SoundEffect.Upgrade);
+				ShowMessageScreen(MessageType.Victory);
 			}
 
 			return;
@@ -150,14 +149,23 @@ public class Main : SceneBase
 	{
 		if (Hud.Health <= 0)
 		{
-			cover.Show();
-			EnemyTimer.Stop();
-			PlaySound(SoundEffect.GameOver);
+			ShowMessageScreen(MessageType.GameOver);
 			return;
 		}
 
 		PlaySound(SoundEffect.Hurt);
 		Hud.Health -= 5;
+	}
+
+	public void ShowMessageScreen(MessageType messageType)
+	{
+		cover.Show();
+		GetTree().Paused = true;
+
+		PlaySound(messageType == MessageType.Victory
+			? SoundEffect.Upgrade
+			: SoundEffect.GameOver);
+		messageScreen.Show(messageType);
 	}
 
 	public void PlaySound(SoundEffect sfx, Vector2? pos = null)
@@ -177,7 +185,7 @@ public class Main : SceneBase
 		pause.Visible = paused;
 	}
 
-	private void LoadMap(string name)
+	public void LoadMap(string name)
 	{
 		currentMap?.QueueFree();
 		currentMap = (TileMap) ((PackedScene) ResourceLoader.Load($"res://maps/{name}.tscn")).Instance();

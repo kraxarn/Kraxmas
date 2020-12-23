@@ -1,0 +1,97 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scene/MessageScreen.cs" type="Script" id=1]
+[ext_resource path="res://fonts/Kenney Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://tiles/ui/button_pressed.png" type="Texture" id=3]
+[ext_resource path="res://tiles/ui/button_normal.png" type="Texture" id=4]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 42
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 22
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 2 )
+
+[node name="MessageDialog" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 24.0
+margin_top = -32.0
+margin_right = 24.0
+margin_bottom = -32.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Grid" type="GridContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_top = -128.0
+margin_right = 192.0
+margin_bottom = 128.0
+theme = SubResource( 1 )
+custom_constants/vseparation = 32
+custom_constants/hseparation = 32
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Grid"]
+margin_right = 384.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "title"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Message" type="Label" parent="Grid"]
+margin_top = 96.0
+margin_right = 384.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 3 )
+text = "message"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Grid"]
+margin_top = 162.0
+margin_right = 384.0
+margin_bottom = 162.0
+
+[node name="Button" type="TextureButton" parent="Grid"]
+margin_left = 97.0
+margin_top = 194.0
+margin_right = 287.0
+margin_bottom = 243.0
+size_flags_horizontal = 4
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="Grid/Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "button"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
