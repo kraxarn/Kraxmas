@@ -16,7 +16,6 @@ size = 36
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 18
 font_data = ExtResource( 5 )
 
 [sub_resource type="DynamicFont" id=3]
@@ -45,17 +44,17 @@ margin_right = 768.0
 margin_bottom = 59.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "KraxmasTD (Beta)"
+text = "KraxmasTD"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="OpenTD" type="Label" parent="Title"]
-margin_left = 323.0
+margin_left = 330.0
 margin_top = 63.0
-margin_right = 445.0
-margin_bottom = 86.0
+margin_right = 438.0
+margin_bottom = 83.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -69,15 +68,16 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -112.0
-margin_top = -80.0
-margin_right = -8.0
-margin_bottom = -5.0
+margin_left = -152.0
+margin_top = -104.0
+margin_right = -6.0
+margin_bottom = -3.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "v0.1.0
+text = "v1.0
 2020
-By kraxarn"
+By kraxarn
+Music by Galgox"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
