@@ -1,2 +1,2 @@
-# 2D Tower defense framework in C# using Godot
-Work-in-progress, not usable yet
+# 2D Tower defense in C++11 using SDL2
+Experimental SDL port
