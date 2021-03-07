@@ -2,7 +2,8 @@
 
 game::game()
 	: w("open-td-sdl", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720),
-	text("res/fonts/kenney_blocks.ttf", 46)
+	text("res/fonts/kenney_blocks.ttf", 46),
+	event(SDL_Event{})
 {
 	text.set_text("open-td");
 	text.set_color(0xf5, 0xf5, 0xf5);
