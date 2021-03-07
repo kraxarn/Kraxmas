@@ -19,12 +19,12 @@ void game::run()
 				running = false;
 				break;
 			}
-
-			w.clear();
-
-			text.render(w, w.w() / 2 - (text.w() / 2), 100);
-
-			w.present();
 		}
+
+		w.clear(0x21, 0x21, 0x21);
+		{
+			text.render(w, w.w() / 2 - (text.w() / 2), 100);
+		}
+		w.present();
 	}
 }
