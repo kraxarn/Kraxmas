@@ -1,7 +1,7 @@
 #include "game.hpp"
 
 game::game()
-	: w("open-td-sdl", 0, 0, 1280, 720),
+	: w("open-td-sdl", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720),
 	text("res/fonts/kenney_blocks.ttf", 46)
 {
 	text.set_text("open-td");
