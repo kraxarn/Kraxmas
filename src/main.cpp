@@ -4,20 +4,28 @@
 
 #include "game.hpp"
 
+void run_game()
+{
+	game g;
+	g.run();
+}
+
 int main(int argc, char **argv)
 {
 	ce::log::info(ce::engine::get_version());
 
-	// This might be a bad idea
+#ifdef NDEBUG
 	try
 	{
-		game g;
-		g.run();
+		run_game();
 	}
 	catch (const std::exception &e)
 	{
 		ce::message_box::error("Error", e.what());
 	}
+#else
+	run_game();
+#endif
 
 	return 0;
 }
