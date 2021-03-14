@@ -8,8 +8,6 @@ set(CMAKE_CXX_STANDARD 11)
 file(GLOB MAIN_SRC "src/*.[hc]pp")
 add_executable(open-td ${MAIN_SRC})
 
-target_link_libraries(open-td PUBLIC open-td-res)
-
 # crowengine
 add_subdirectory(engine)
 target_link_libraries(open-td PRIVATE crowengine)
