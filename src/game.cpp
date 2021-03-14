@@ -13,14 +13,14 @@ game::game()
 
 void game::run()
 {
-	while (window.get_running())
+	while (window.is_open())
 	{
 		window.tick();
 
 		window.clear();
 		{
-			window.render(text);
+			window.draw(text);
 		}
-		window.present();
+		window.render();
 	}
 }
