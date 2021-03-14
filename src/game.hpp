@@ -17,5 +17,4 @@ private:
 	ce::file_loader loader;
 	ce::font font;
 	ce::text text;
-	bool running = true;
 };
