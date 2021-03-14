@@ -1,31 +1,25 @@
 #include "game.hpp"
 
 game::game()
-	: w("open-td-sdl", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720),
-	text("res/fonts/kenney_blocks.ttf", 46),
-	event(SDL_Event{})
+	: window("open-td-sdl", 1280, 720),
+	loader("res"),
+	font(loader.get_font("res/fonts/kenney_blocks.ttf", 46)),
+	text(font)
 {
 	text.set_text("open-td");
-	text.set_color(0xf5, 0xf5, 0xf5);
+	text.set_color(ce::color(0xf5, 0xf5, 0xf5));
 }
 
 void game::run()
 {
-	while (running)
+	while (window.get_running())
 	{
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT)
-			{
-				running = false;
-				break;
-			}
-		}
+		window.tick();
 
-		w.clear(0x21, 0x21, 0x21);
+		window.clear();
 		{
-			text.render(w, w.w() / 2 - (text.w() / 2), 100);
+			window.render(text, window.w() / 2 - (text.width() / 2), 100);
 		}
-		w.present();
+		window.present();
 	}
 }

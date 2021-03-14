@@ -1,7 +1,9 @@
 #pragma once
 
-#include "window.hpp"
-#include "label.hpp"
+#include "ce/window.hpp"
+#include "ce/graphics/text.hpp"
+#include "ce/font.hpp"
+#include "ce/assets/fileloader.hpp"
 
 class game
 {
@@ -11,8 +13,9 @@ public:
 	void run();
 
 private:
-	window w;
-	label text;
+	ce::window window;
+	ce::file_loader loader;
+	ce::font font;
+	ce::text text;
 	bool running = true;
-	SDL_Event  event;
 };
