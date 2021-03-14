@@ -3,7 +3,7 @@
 game::game()
 	: window("open-td-sdl", 1280, 720),
 	loader("res"),
-	font(loader.get_font("res/fonts/kenney_blocks.ttf", 46)),
+	font(loader.get_font("kenney_blocks.ttf", 46)),
 	text(font)
 {
 	text.set_text("open-td");
