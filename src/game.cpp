@@ -1,7 +1,10 @@
 #include "game.hpp"
 
+#include "ce/engine.hpp"
+#include "ce/format.hpp"
+
 game::game()
-	: window("open-td-sdl", 1280, 720),
+	: window(ce::fmt::format("OpenTD - {}", ce::engine::version()), 1280, 720),
 	loader("res"),
 	font(loader.get_font("kenney_blocks.ttf", 46)),
 	text(font)

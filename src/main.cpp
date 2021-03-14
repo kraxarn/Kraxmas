@@ -1,7 +1,4 @@
-#include "ce/engine.hpp"
-#include "ce/log.hpp"
 #include "ce/ui/messagebox.hpp"
-
 #include "game.hpp"
 
 void run_game()
@@ -12,8 +9,6 @@ void run_game()
 
 int main(int argc, char **argv)
 {
-	ce::log::info(ce::engine::get_version());
-
 #ifdef NDEBUG
 	try
 	{
