@@ -8,7 +8,7 @@ game::game()
 {
 	text.set_text("open-td");
 	text.set_color(ce::color(0xf5, 0xf5, 0xf5));
-	text.set_position(window.w() / 2 - (text.width() / 2), 100);
+	text.set_position(window.width() / 2 - (text.width() / 2), 100);
 }
 
 void game::run()
