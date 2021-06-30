@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: opentd-linux
-          path: ${{runner.workspace}}/opentd/opentd
+          path: ${{runner.workspace}}/opentd
