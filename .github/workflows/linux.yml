@@ -15,6 +15,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install libx11-dev libxi-dev libgl1-mesa-dev libasound2-dev
+
       - name: Build
         run: cargo build --release
 
