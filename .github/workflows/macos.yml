@@ -26,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: opentd-macos
-          path: ${{runner.workspace}}/opentd
+          path: ${{runner.workspace}}/opentd/target/release/opentd
