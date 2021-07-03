@@ -1,4 +1,4 @@
-# 2D Tower defense in Rust using macroquad
+# 2D Tower defense game powered by crabs and birds
 Very early, more stuff coming soon
 
 [![Ubuntu](https://github.com/kraxarn/opentd/actions/workflows/linux.yml/badge.svg)](https://github.com/kraxarn/opentd/actions/workflows/linux.yml)
