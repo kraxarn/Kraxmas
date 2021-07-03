@@ -20,7 +20,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt update
-          sudo apt install libx11-dev libasound2-dev libudev-dev
+          sudo apt install libx11-dev libasound2-dev libudev-dev libxi-dev libgl1-mesa-dev
 
       - name: Build
         run: cargo build --release
