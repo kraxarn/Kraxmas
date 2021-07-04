@@ -1,7 +1,6 @@
 use macroquad::prelude::*;
 
 mod menu;
-mod style;
 
 pub const APP_NAME: &str = "OpenTD: Alpha";
 
