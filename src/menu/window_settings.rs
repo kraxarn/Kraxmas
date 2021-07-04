@@ -23,9 +23,3 @@ pub fn all_scales() -> Vec<f32> {
 pub fn base_resolution() -> glam::Vec2 {
 	vec2(1280_f32, 720_f32)
 }
-
-pub fn all_resolutions() -> Vec<glam::Vec2> {
-	all_scales().into_iter().map(|r| {
-		base_resolution() * r
-	}).collect()
-}

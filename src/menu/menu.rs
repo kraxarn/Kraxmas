@@ -16,8 +16,12 @@ impl crate::scene::Scene for super::Menu {
 				.default_pos(egui::Pos2::new(96_f32, screen_height() * 0.4_f32))
 				.show(ctx, |ui| {
 					ui.vertical_centered_justified(|ui| {
-						ui.button("Play");
-						ui.button("Create");
+						if ui.button("Play").clicked() {
+							unimplemented!();
+						}
+						if ui.button("Create").clicked() {
+							unimplemented!();
+						}
 						if ui.button("Settings").clicked() {
 							self.settings_open = !self.settings_open;
 						}
