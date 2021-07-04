@@ -17,13 +17,18 @@ fn window_conf() -> Conf {
 
 #[macroquad::main(window_conf)]
 async fn main() {
+	let foreground_color = Color::from_rgba(0xff, 0xff, 0xff, 0xff);
 	let background_color = Color::from_rgba(0x21, 0x21, 0x21, 0xff);
+
 	let mut menu = menu::Menu::new();
 
 	loop {
 		clear_background(background_color);
 
-		menu.update().await;
+		menu.update();
+
+		draw_text(&format!("FPS: {}", get_fps()), 16_f32, 24_f32,
+				  22_f32, foreground_color);
 
 		next_frame().await
 	}
