@@ -12,18 +12,20 @@ impl crate::scene::Scene for super::Menu {
 
 	fn update(&mut self) {
 		egui_macroquad::ui(|ctx| {
-			egui::Window::new("Main Menu").show(ctx, |ui| {
-				ui.vertical_centered_justified(|ui| {
-					ui.button("Play");
-					ui.button("Create");
-					if ui.button("Settings").clicked() {
-						self.settings_open = !self.settings_open;
-					}
-					if ui.button("Quit").clicked() {
-						std::process::exit(0);
-					}
+			egui::Window::new("Main Menu")
+				.default_pos(egui::Pos2::new(96_f32, screen_height() * 0.4_f32))
+				.show(ctx, |ui| {
+					ui.vertical_centered_justified(|ui| {
+						ui.button("Play");
+						ui.button("Create");
+						if ui.button("Settings").clicked() {
+							self.settings_open = !self.settings_open;
+						}
+						if ui.button("Quit").clicked() {
+							std::process::exit(0);
+						}
+					});
 				});
-			});
 
 			let audio_settings = &mut self.audio_settings;
 			let window_settings = &mut self.window_settings;
