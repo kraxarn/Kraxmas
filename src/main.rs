@@ -1,6 +1,7 @@
 use macroquad::prelude::*;
 
 mod menu;
+mod style;
 
 pub const APP_NAME: &str = "OpenTD: Alpha";
 
@@ -16,11 +17,12 @@ fn window_conf() -> Conf {
 #[macroquad::main(window_conf)]
 async fn main() {
 	let background_color = Color::from_rgba(0x21, 0x21, 0x21, 0xff);
+	let mut menu = menu::Menu::new();
 
 	loop {
 		clear_background(background_color);
 
-		menu::update().await;
+		menu.update().await;
 
 		next_frame().await
 	}
