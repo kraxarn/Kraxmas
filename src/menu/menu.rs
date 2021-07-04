@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 
-impl super::Menu {
-	pub fn new() -> Self {
+impl crate::scene::Scene for super::Menu {
+	fn new() -> Self {
 		Self {
 			settings_open: false,
 
@@ -10,7 +10,7 @@ impl super::Menu {
 		}
 	}
 
-	pub async fn update(&mut self) {
+	fn update(&mut self) {
 		egui_macroquad::ui(|ctx| {
 			egui::Window::new("Main Menu").show(ctx, |ui| {
 				ui.vertical_centered_justified(|ui| {

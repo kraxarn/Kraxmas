@@ -1,6 +1,8 @@
 use macroquad::prelude::*;
+use crate::scene::Scene;
 
 mod menu;
+mod scene;
 
 pub const APP_NAME: &str = "OpenTD: Alpha";
 
