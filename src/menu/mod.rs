@@ -1,8 +1,8 @@
 use macroquad::prelude::*;
 
 mod audio_settings;
-mod window_settings;
 mod menu;
+mod window_settings;
 
 pub struct Menu {
 	// Windows
