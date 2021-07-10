@@ -31,13 +31,11 @@ impl LoadLevel {
 						for i in row_range {
 							let checked = match selected {
 								Some(c) => *c == i,
-								None => String::,
+								None => false,
 							};
 							if ui.selectable_label(checked, &files[i]).clicked() {
 								*selected = Some(i);
-							};
-
-							ui.selectable_value(mat)
+							}
 						}
 					},
 				);
