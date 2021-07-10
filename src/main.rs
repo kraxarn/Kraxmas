@@ -1,7 +1,7 @@
-use crate::scene::Scene;
 use macroquad::prelude::*;
 
 mod color;
+mod game;
 mod menu;
 mod scene;
 
@@ -18,12 +18,12 @@ fn window_conf() -> Conf {
 
 #[macroquad::main(window_conf)]
 async fn main() {
-	let mut menu = menu::Menu::new();
+	let mut game: game::Game = Default::default();
 
 	loop {
 		clear_background(color::BACKGROUND);
 
-		menu.update();
+		game.current.draw();
 
 		draw_text(
 			&format!("FPS: {}", get_fps()),
