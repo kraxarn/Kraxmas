@@ -23,7 +23,7 @@ async fn main() {
 	loop {
 		clear_background(color::BACKGROUND);
 
-		game.current.draw();
+		game.current.update();
 
 		draw_text(
 			&format!("FPS: {}", get_fps()),
