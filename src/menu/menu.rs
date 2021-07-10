@@ -19,10 +19,10 @@ impl crate::scene::Scene for super::Menu {
 				.show(ctx, |ui| {
 					ui.vertical_centered_justified(|ui| {
 						if ui.button("Play").clicked() {
-							unimplemented!();
+							todo!();
 						}
 						if ui.button("Create").clicked() {
-							unimplemented!();
+							todo!();
 						}
 						if ui.button("Settings").clicked() {
 							self.settings_open = !self.settings_open;
