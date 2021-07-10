@@ -52,14 +52,14 @@ impl crate::scene::Scene for super::Menu {
 
 					ui.heading("Window");
 					egui::Grid::new("window_grid").show(ui, |ui| {
-						let resolution = super::window_settings::base_resolution()
+						let resolution = crate::settings::window::base_resolution()
 							* window_settings.resolution_scale;
 						ui.label("Resolution");
 						egui::ComboBox::from_label("")
 							.selected_text(format!("{}x{}", resolution.x, resolution.y))
 							.show_ui(ui, |ui| {
-								for scale in super::window_settings::all_scales() {
-									let res = super::window_settings::base_resolution() * scale;
+								for scale in crate::settings::window::all_scales() {
+									let res = crate::settings::window::base_resolution() * scale;
 									ui.selectable_value(
 										&mut window_settings.resolution_scale,
 										1_f32,

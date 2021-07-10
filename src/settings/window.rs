@@ -1,12 +1,6 @@
 use macroquad::prelude::*;
 
-pub struct WindowSettings {
-	pub fullscreen: bool,
-	pub resolution_scale: f32,
-	pub resolution: u8,
-}
-
-impl Default for WindowSettings {
+impl Default for super::WindowSettings {
 	fn default() -> Self {
 		Self {
 			fullscreen: false,
