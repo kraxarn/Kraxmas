@@ -3,8 +3,8 @@ pub struct AudioSettings {
 	pub sound_volume: u8,
 }
 
-impl AudioSettings {
-	pub fn new() -> Self {
+impl Default for AudioSettings {
+	fn default() -> Self {
 		Self {
 			music_volume: 100,
 			sound_volume: 100,

@@ -5,8 +5,8 @@ impl super::Menu {
 		Self {
 			settings_open: false,
 
-			audio_settings: super::audio_settings::AudioSettings::new(),
-			window_settings: super::window_settings::WindowSettings::new(),
+			audio_settings: Default::default(),
+			window_settings: Default::default(),
 		}
 	}
 }

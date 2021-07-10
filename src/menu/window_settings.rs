@@ -6,8 +6,8 @@ pub struct WindowSettings {
 	pub resolution: u8,
 }
 
-impl WindowSettings {
-	pub fn new() -> Self {
+impl Default for WindowSettings {
+	fn default() -> Self {
 		Self {
 			fullscreen: false,
 			resolution_scale: 1_f32,
