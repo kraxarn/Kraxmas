@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 
-impl crate::scene::Scene for super::Menu {
-	fn new() -> Self {
+impl super::Menu {
+	pub fn new() -> Self {
 		Self {
 			settings_open: false,
 
@@ -9,7 +9,9 @@ impl crate::scene::Scene for super::Menu {
 			window_settings: super::window_settings::WindowSettings::new(),
 		}
 	}
+}
 
+impl crate::scene::Scene for super::Menu {
 	fn update(&mut self) {
 		egui_macroquad::ui(|ctx| {
 			egui::Window::new("Main Menu")
@@ -58,9 +60,11 @@ impl crate::scene::Scene for super::Menu {
 							.show_ui(ui, |ui| {
 								for scale in super::window_settings::all_scales() {
 									let res = super::window_settings::base_resolution() * scale;
-									ui.selectable_value(&mut window_settings.resolution_scale,
-														1_f32,
-														format!("{}x{}", res.x, res.y));
+									ui.selectable_value(
+										&mut window_settings.resolution_scale,
+										1_f32,
+										format!("{}x{}", res.x, res.y),
+									);
 								}
 							});
 						ui.end_row();
