@@ -10,7 +10,7 @@ impl super::Menu {
 						todo!();
 					}
 					if ui.button("Create").clicked() {
-						todo!();
+						self.load_level.open = true;
 					}
 					if ui.button("Settings").clicked() {
 						self.settings_open = !self.settings_open;
