@@ -1,6 +1,8 @@
 use macroquad::prelude::*;
 
+mod main_menu;
 mod menu;
+mod settings;
 
 pub struct Menu {
 	// Windows
