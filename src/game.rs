@@ -5,7 +5,7 @@ pub struct Game {
 impl Default for Game {
 	fn default() -> Self {
 		Self {
-			current: Box::new(crate::menu::Menu::new()),
+			current: Box::new(crate::scene::menu::Menu::new()),
 		}
 	}
 }

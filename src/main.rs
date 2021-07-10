@@ -2,7 +2,6 @@ use macroquad::prelude::*;
 
 mod color;
 mod game;
-mod menu;
 mod scene;
 
 pub const APP_NAME: &str = "OpenTD: Alpha";
