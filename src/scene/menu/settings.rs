@@ -1,40 +1,41 @@
+use macroquad::prelude::*;
+use macroquad::ui::hash;
+
 impl super::Menu {
-	pub fn settings(&mut self, ctx: &egui::CtxRef) {
-		let audio_settings = &mut self.audio_settings;
-		let window_settings = &mut self.window_settings;
+	pub fn settings(&mut self) {
+		if !self.settings_open {
+			return;
+		}
 
-		egui::Window::new("Settings")
-			.open(&mut self.settings_open)
-			.show(ctx, |ui| {
-				ui.heading("Audio");
-				egui::Grid::new("audio_grid").show(ui, |ui| {
-					ui.label("Music");
-					ui.add(egui::Slider::new(&mut audio_settings.music_volume, 0..=100));
-					ui.end_row();
+		let window_position = vec2(
+			self.window_position.x + self.window_size.x + (self.padding * 2_f32),
+			self.window_position.y,
+		);
 
-					ui.label("Sound");
-					ui.add(egui::Slider::new(&mut audio_settings.sound_volume, 0..=100));
-					ui.end_row();
-				});
+		macroquad::ui::widgets::Window::new(hash!(), window_position, self.window_size)
+			.label("Settings")
+			.titlebar(false)
+			.ui(&mut *macroquad::ui::root_ui(), |ui| {
+				ui.label(vec2(self.padding, self.padding), "Audio");
+				macroquad::ui::widgets::Group::new(
+					hash!(),
+					vec2(self.window_size.x - self.padding * 2_f32, 48_f32),
+				)
+				.position(vec2(self.padding, 32_f32))
+				.ui(ui, |ui| {
+					ui.drag(
+						hash!(),
+						"Music",
+						Some((0_f32, 100_f32)),
+						&mut self.audio_settings.music_volume,
+					);
 
-				ui.heading("Window");
-				egui::Grid::new("window_grid").show(ui, |ui| {
-					let resolution = crate::settings::window::base_resolution()
-						* window_settings.resolution_scale;
-					ui.label("Resolution");
-					egui::ComboBox::from_label("")
-						.selected_text(format!("{}x{}", resolution.x, resolution.y))
-						.show_ui(ui, |ui| {
-							for scale in crate::settings::window::all_scales() {
-								let res = crate::settings::window::base_resolution() * scale;
-								ui.selectable_value(
-									&mut window_settings.resolution_scale,
-									1_f32,
-									format!("{}x{}", res.x, res.y),
-								);
-							}
-						});
-					ui.end_row();
+					ui.drag(
+						hash!(),
+						"Sound",
+						Some((0_f32, 100_f32)),
+						&mut self.audio_settings.sound_volume,
+					);
 				});
 			});
 	}

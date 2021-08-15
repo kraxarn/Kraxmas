@@ -4,6 +4,7 @@ mod color;
 mod game;
 mod scene;
 pub mod settings;
+mod style;
 
 pub const APP_NAME: &str = "OpenTD: Alpha";
 
