@@ -3,5 +3,6 @@ name = "opentd"
 version = "0.1.0"
 edition = "2018"
 
-[dependencies]
-macroquad = "0.3"
+[dependencies.macroquad]
+version = "0.3"
+features = ["backtrace"]

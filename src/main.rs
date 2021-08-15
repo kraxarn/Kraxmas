@@ -21,6 +21,25 @@ fn window_conf() -> Conf {
 async fn main() {
 	let mut game: game::Game = Default::default();
 
+	set_panic_handler(|msg, backtrace| async move {
+		loop {
+			clear_background(color::BACKGROUND);
+			let x = 16_f32;
+			let mut y = 72_f32;
+			let font_size = 24_f32;
+
+			draw_text("Fatal Error :(", x, 24_f32, font_size, color::ERROR);
+			draw_text(&msg, x, 44_f32, font_size, color::FOREGROUND);
+
+			for line in backtrace.split('\n') {
+				draw_text(line, x, y, font_size, color::FOREGROUND);
+				y += 22_f32;
+			}
+
+			next_frame().await;
+		}
+	});
+
 	loop {
 		clear_background(color::BACKGROUND);
 
